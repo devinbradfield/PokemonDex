@@ -6,68 +6,51 @@ import CenterCard from "./Components/CenterCard";
 import SearchBar from "./Components/SearchBar";
 import TeamCards from "./Components/TeamCards";
 
-// export default function App() {
-//   return (
-//     <div className="App">
-//       <h1>Welcome to the Pokedex</h1>
-//       <h2>Start editing to see some magic happen!</h2>
-//     </div>
-//   );
-// }
-
 class App extends Component {
   constructor() {
     super();
     this.state = {
       pokeData: [],
+      PokeImg: [],
       searched: "",
       team: [],
-      isSelected: false
+      isSelected: false,
+      currentPokemon: ""
     };
     this.updateChange = this.updateChange.bind(this);
+    this.addPokemonToTeam = this.addPokemonToTeam.bind(this);
   }
 
   async componentDidMount() {
-    // fetch('https://pokeapi.co/api/v2/pokemon?limit=500')
-    // .then(response => response.json())
-    // .then(name => this.setState({pokemons:name.results}));
-
     fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
       .then((response) => response.json())
       .then((name) => this.setState({ pokeData: name.results }));
   }
 
   updateChange = (e) => {
-    // const formData = new FormData(e.target.value);
-
     let searched = document.querySelector("#search-input").value;
     this.setState({ searched, isSelected: true });
     e.preventDefault();
-    console.log("UPDATE CHANGE LOG: ", searched);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // }
-
-    //   fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-    //   .then((response) => response.json())
-    //   .then((name) => this.setState({ pokeData: name.results }));
+    //console.log("UPDATE CHANGE LOG: ", searched);
   };
-  // const handleChange = (e) => {
-  //   updateFormData({
-  //     ...formData,
 
-  //     // Trimming any whitespace
-  //     [e.target.name]: e.target.value.trim()
-  //   });
-  // };
+  addPokemonToTeam = (e) => {
+    let data = JSON.parse(e.target.value);
+    // console.log("ADD POKEMON TO TEAM LOG: ", data)
+    this.setState((prevState) => ({
+      team: [...prevState.team, data]
+    }));
+    //console.log("ADD POKEMON TO TEAM LOG: ", this.state.team)
+    e.preventDefault();
+  };
 
   render() {
     const { pokeData, searched, team, isSelected } = this.state;
     const searchedPokemon = pokeData.filter((p) =>
       p.name.toLowerCase().includes(searched.toLowerCase())
     )[0];
-    console.log("APP.JS LOG: ", searchedPokemon);
-    //const searchedPokemon = pokeData.searched.toLowerCase();
+    //console.log("APP.JS LOG: ", searchedPokemon);
+
     return (
       <div className="App">
         <header className="App-header">
@@ -76,25 +59,20 @@ class App extends Component {
             alt="pokemon_logo"
             className="pokemon-logo"
           />
-          <h1 className="title"> Pokedex </h1>
-          {/* <form
-            className="search"
-            type="search"
-            placeholder= "Search for a Pokemon"
-            onSubmit= {this.updateChange}
-          >
-            Enter Pokemon: <input type="text" />
-            <input type="submit" value="Submit" />
-          </form> */}
+          <h1 className="title">Pokedex</h1>
         </header>
-        <body>
+        <body className="app-body">
           <div className="center-card">
             <SearchBar
               placeholder="Search for a Pokemon"
               updateChange={this.updateChange}
               searched={searched}
             />
-            <CenterCard pokemon={searchedPokemon} isSelected={isSelected} />
+            <CenterCard
+              pokemon={searchedPokemon}
+              isSelected={isSelected}
+              addPokemonToTeam={this.addPokemonToTeam}
+            />
           </div>
           <div className="team-cards">
             <h2> Your Team </h2>

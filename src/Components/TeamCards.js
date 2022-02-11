@@ -1,10 +1,10 @@
 import PokemonCard from "./PokemonCard";
 
 function TeamCards({ pokeTeam }) {
-  let pokeComponentArray = pokeTeam.map((pokemon, index) => (
-    <PokemonCard pokemon={pokemon} index={index} />
+  let pokeComponentArray = pokeTeam.map((pokemon) => (
+    <PokemonCard pokemon={pokemon} />
   ));
   // console.log(`In the pokemon list`);
-  return <div className="pokemon-list">{pokeComponentArray}</div>;
+  return <div className="pokemon-team-cards">{pokeComponentArray}</div>;
 }
 export default TeamCards;

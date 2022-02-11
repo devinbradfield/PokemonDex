@@ -1,20 +1,29 @@
+import "../App.css";
+
 function PokemonCard({ pokemon }) {
+  function getPokemonImage(url) {
+    fetch(url)
+      .then((response) => response.json())
+      .then((results) => {
+        //console.log(results.sprites.front_default)
+        return results.sprites.front_default;
+      });
+  }
+
+  //let pokeImgUrl = getPokemonImage(pokemon.url);
+  //console.log('after function:', pokeImgUrl)
+
   return (
     <div>
       <h1> {pokemon.name} </h1>
       <br />
-      <img src={pokemon.image} alt={pokemon.name} />
+      <img
+        src={`https://img.pokemondb.net/artwork/large/${pokemon.name}.jpg`}
+        //src={pokeImgUrl}
+        alt={pokemon.name}
+        className="pokemon-card-image"
+      />
     </div>
-    // <div className="card text-center mx-auto" style={{"maxWidth" : "18rem"}} key={pokemon.id}>
-    //     <div className="card-header"><b>{pokemon.name}</b></div>
-    //     <div className="card-body">
-    //       <h6 className="card-subtitle mb-2 text-muted">Id: {pokemon.id}</h6>
-    //       <h6 className="card-subtitle mb-2 text-muted">Height: {pokemon.height}</h6>
-    //       <h6 className="card-subtitle mb-2 text-muted">Weight: {pokemon.weight}</h6>
-    //       <img src={pokemon.sprites['front_default']} alt={pokemon.name} />
-    //       <img src={pokemon.sprites['back_default']} alt={pokemon.name} />
-    //     </div>
-    //   </div>
   );
 }
 

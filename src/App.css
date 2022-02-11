@@ -2,23 +2,41 @@
   background-color: white;
 }
 
+.app-body {
+  border: 3px solid black;
+  padding: 10px;
+  display: flex;
+}
+
 .title {
-  margin: 0;
+  /* margin: 0;
+  padding: 0px; */
+  flex-direction: row;
+  justify-content: center;
 }
 
 .center-card {
   background-image: `url("./kanto.jpg")`
-  float: left;
-  width: 70%;
+  width: 60%;
+  border: 1px solid blue;
+  padding: 20px;
+  flex: 2;
+  margin-right: 20px;
 }
 
 .team-cards {
-  float: right;
+  align-self: last baseline;
   width: 30%;
+  border: 1px solid blue;
+  padding: 20px;
 }
 
 .pokemon-logo {
-  float: left;
-  max-width: 100px;
+  align-self:flex-start
+  max-width: 50px;
   padding-right: 0px;
+}
+
+.pokemon-card-image {
+  max-width: 200px;
 }
