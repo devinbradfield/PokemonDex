@@ -5,6 +5,7 @@ import "./Components/Navbar";
 import CenterCard from "./Components/CenterCard";
 import SearchBar from "./Components/SearchBar";
 import TeamCards from "./Components/TeamCards";
+//import AbilitiesCard from "./Components/AbilitiesCard";
 
 class App extends Component {
   constructor() {
@@ -15,7 +16,8 @@ class App extends Component {
       searched: "",
       team: [],
       isSelected: false,
-      currentPokemon: ""
+      currentPokemon: "",
+      pokeDetails: undefined
     };
     this.updateChange = this.updateChange.bind(this);
     this.addPokemonToTeam = this.addPokemonToTeam.bind(this);
@@ -44,12 +46,30 @@ class App extends Component {
     e.preventDefault();
   };
 
+  getPokemonDetails() {
+    fetch(this.state.currentPokemon.url)
+      .then((response) => response.json())
+      .then((results) => {
+        //console.log("getPokemonDetails: ", results)
+        this.setState({ pokeDetails: results });
+      });
+  }
+
+  getSearchedPokemon() {
+    const searchedPokemon = this.state.pokeData.filter((p) =>
+      p.name.toLowerCase().includes(this.state.searched.toLowerCase())
+    )[0];
+
+    this.setState({ currentPokemon: searchedPokemon });
+  }
+
   render() {
-    const { pokeData, searched, team, isSelected } = this.state;
-    const searchedPokemon = pokeData.filter((p) =>
+    const { pokeData, searched, team, isSelected, currentPokemon } = this.state;
+    const currentPokemon2 = pokeData.filter((p) =>
       p.name.toLowerCase().includes(searched.toLowerCase())
     )[0];
     //console.log("APP.JS LOG: ", searchedPokemon);
+    //this.setState({currentPokemon: searchedPokemon})
 
     return (
       <div className="App">
@@ -59,7 +79,7 @@ class App extends Component {
             alt="pokemon_logo"
             className="pokemon-logo"
           />
-          <h1 className="title">Pokedex</h1>
+          <h1 className="title"></h1>
         </header>
         <body className="app-body">
           <div className="center-card">
@@ -69,13 +89,17 @@ class App extends Component {
               searched={searched}
             />
             <CenterCard
-              pokemon={searchedPokemon}
+              pokemon={currentPokemon2}
               isSelected={isSelected}
               addPokemonToTeam={this.addPokemonToTeam}
+              getPokemonDetails={this.getPokemonDetails}
             />
           </div>
           <div className="team-cards">
-            <h2> Your Team </h2>
+            <h2>
+              {" "}
+              <u> Your Team </u>{" "}
+            </h2>
             <TeamCards pokeTeam={team} />
           </div>
         </body>

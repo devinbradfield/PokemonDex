@@ -1,8 +1,9 @@
 import React from "react";
 import PokemonCard from "./PokemonCard";
 import Welcome from "./Welcome";
+import AbilitiesCard from "./AbilitiesCard";
 
-function CenterCard({ pokemon, isSelected, addPokemonToTeam }) {
+function CenterCard({ pokemon, isSelected, addPokemonToTeam, getPokeDetails }) {
   //console.log("Center Card Log: ", pokemon);
   let stringifyPokemon = JSON.stringify(pokemon);
   if (!isSelected) {
@@ -16,6 +17,11 @@ function CenterCard({ pokemon, isSelected, addPokemonToTeam }) {
           {" "}
           Add To Team{" "}
         </button>
+        <br />
+        <br />
+        <div className="abilities-card">
+          <AbilitiesCard pokemon={pokemon} getPokemonDetails={getPokeDetails} />
+        </div>
       </>
     );
   }

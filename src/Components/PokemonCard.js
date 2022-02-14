@@ -15,7 +15,7 @@ function PokemonCard({ pokemon }) {
 
   return (
     <div>
-      <h1> {pokemon.name} </h1>
+      <h1> {pokemon.name.toUpperCase()} </h1>
       <br />
       <img
         src={`https://img.pokemondb.net/artwork/large/${pokemon.name}.jpg`}
